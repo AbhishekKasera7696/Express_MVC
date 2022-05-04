@@ -18,7 +18,17 @@ async function createUser(req,res,next){
    try{
        console.log('req.body',req.body);
        let userDetail = req.body;
-       let response = await userModel.insertMany([userDeatil]);
+       let response = await userModel.insertMany([userDetail]);
+       let parentInfo = {
+          email :response._id,
+          firstName : req.body.parents.firstName,
+          lastName : req.body.parents.lastName,
+          age : req.body.parents.age,
+          phoneNo : req.body.parents.phoneNo,
+       }
+
+       console.log(parentInfo)
+       await parentModel.insertMany([parentInfo]);
        res.json(response);
    }
    catch (error){
